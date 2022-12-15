@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List</title>
+</head>
+<body>
+   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+   <div id="App">
+    <h2>To Do App</h2>
+
+    <input type="text" v-model="keyword" placeholder="Add your list">
+    <button @click="saveList" class="btn btn-primary">  Add  </button>
+    <ul>
+        <li v-for="list in lists" @click="deleteList(list.id)">{{list.list}}</li>
+    </ul>
+   </div>
+
+   <script>
+    const todo = Vue.createApp({
+        data() {
+            return {
+                header: 'To Do List',
+                keyword: '',
+                lists:[]
+            }
+        },
+        methods: {
+            saveList() {
+                if (this.keyword != "") {
+                    this.lists.push({
+                        id: this.lists.length + 1,
+                        list: this.keyword
+                    })
+                    this.keyword= ""
+                }
+            },
+            deleteList(id) {
+                for(let i = 0; i < this.lists.length; i++) {
+                    if (this.lists[i].id == id) {
+                        this.lists.splice(i, 1)
+                        break;
+                    }
+                }
+            }
+        }
+    }).mount('#App')
+   </script>
+</body>
+</html>
